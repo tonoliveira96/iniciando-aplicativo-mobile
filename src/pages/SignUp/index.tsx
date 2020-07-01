@@ -83,8 +83,8 @@ const SignUp: React.FC = () => {
         enabled
       >
         <ScrollView
-            keyboardShouldPersistTaps="handled"
-            contentContainerStyle={{ flex: 1 }}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ flex: 1 }}
         >
           <Container>
             <Image source={logoImg} />
@@ -94,39 +94,38 @@ const SignUp: React.FC = () => {
 
             <Form ref={formRef} onSubmit={handleSingUp}>
               <Input
-                  autoCapitalize="words"
-                  name="name"
-                  icon="user"
+                autoCapitalize="words"
+                name="name"
+                icon="user"
                 placeholder="Nome"
-                  returnKeyType="next"
-                  onSubmitEditing={() => {
+                returnKeyType="next"
+                onSubmitEditing={() => {
                   emailInputRef.current.focus();
                 }}
-
               />
 
               <Input
                 ref={emailInputRef}
-                  autoCorrect={false}
+                autoCorrect={false}
                 autoCapitalize="none"
-                  keyboardType="email-address"
+                keyboardType="email-address"
                 name="email"
-                  icon="mail"
+                icon="mail"
                 placeholder="E-mail"
-                  returnKeyType="next"
-                onSubmitEditing={()=>{
+                returnKeyType="next"
+                onSubmitEditing={() => {
                   passwordInputRef.current.focus();
                 }}
               />
 
               <Input
-                  ref={passwordInputRef}
+                ref={passwordInputRef}
                 name="password"
-                  icon="lock"
+                icon="lock"
                 placeholder="Senha"
-                  secureTextEntry
+                secureTextEntry
                 returnKeyType="send"
-                  textContentType="newPassword"
+                textContentType="newPassword"
                 onSubmitEditing={() => {
                   formRef.current?.submitForm();
                 }}
@@ -134,12 +133,11 @@ const SignUp: React.FC = () => {
             </Form>
             <Button
               onPress={() => {
-                formRef.current?.submitForm();}
+                formRef.current?.submitForm();
+              }}
             >
-Entrar
-
+              Entrar
             </Button>
-
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
