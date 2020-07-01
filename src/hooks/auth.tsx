@@ -1,6 +1,13 @@
-import React, { createContext, useCallback, useState , useContext, useEffect} from 'react';
-import AsyncStorage from '@react-native-community/async-storage'
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
+
 interface authState {
   token: string;
   user: object;
@@ -21,21 +28,20 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<authState>({} as authState);
 
-useEffect(()=>{
-  async function loadStorageData(): Promise<void>{
-    const [token, user] = await AsyncStorage.multiGet([
-      '@GoBarber:token',
-      '@GoBarber:user',
-    ]);
+  useEffect(() => {
+    async function loadStorageData(): Promise<void> {
+      const [token, user] = await AsyncStorage.multiGet([
+        '@GoBarber:token',
+        '@GoBarber:user',
+      ]);
 
-
-    if (token[1] && user[1]) {
-      setData({ token: token[1], user: JSON.parse(user[1]) });
+      if (token[1] && user[1]) {
+        setData({ token: token[1], user: JSON.parse(user[1]) });
+      }
     }
-  }
 
-  loadStorageData();
-},[])
+    loadStorageData();
+  }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post('sessions', {
@@ -47,17 +53,17 @@ useEffect(()=>{
 
     await AsyncStorage.multiSet([
       ['@GoBarber:token', token],
-      ['@GoBarber:user', JSON.stringify(user)]
+      ['@GoBarber:user', JSON.stringify(user)],
     ]);
 
-    setData({token, user});
+    setData({ token, user });
   }, []);
 
-  const signOut = useCallback(async ()=>{
+  const signOut = useCallback(async () => {
     await AsyncStorage.multiRemove(['@GoBarber:token', '@GoBarber:user']);
 
-    setData({} as authState)
-  },[])
+    setData({} as authState);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
@@ -66,10 +72,10 @@ useEffect(()=>{
   );
 };
 
-function useAuth(): AuthContextData{
+function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
 
-  if(!context){
+  if (!context) {
     throw Error('useAuth must be used within an AuthProvider');
   }
 
