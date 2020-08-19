@@ -33,7 +33,7 @@ const AppointmentCreated: React.FC = () => {
   const formattedDate = useMemo(() => {
     return format(
       RouterParams.date,
-      "EEEE ', dia ' dd 'de' MMM 'de' YYYY 'às' HH:mm'h'",
+      "EEEE ', dia ' dd 'de' MMM 'de' yyyy 'às' HH:mm'h'",
       { locale: ptBR },
     );
   }, [RouterParams.date]);
